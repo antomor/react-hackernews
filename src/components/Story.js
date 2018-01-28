@@ -3,11 +3,11 @@ import React, { Component } from 'react';
 class Story extends Component {
 
   render() {
-      const item = this.props.item;
+    const item = this.props.item;
     return (
-      <div className="Story-item">
-        {item}
-      </div>
+      <li className="story-item">
+        <a href={item.url}>{item.title}</a>
+      </li>
     );
   }
 }

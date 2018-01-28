@@ -5,12 +5,12 @@ class StoryList extends Component {
 
   render() {
       var items = this.props.items.map(x => {
-          return <Story key={x} item={x} />
+        return <Story key={x.id} item={x} />
       });
     return (
-      <div className="Story-list">
+      <ul className="Story-list">
         {items}
-      </div>
+      </ul>
     );
   }
 }

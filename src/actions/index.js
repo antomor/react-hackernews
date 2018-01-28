@@ -1,55 +1,76 @@
-import fetch from 'cross-fetch'
+import fetch from 'cross-fetch';
 
-export const REQUEST_STORIES = 'REQUEST_STORIES'
-export const RECEIVE_STORIES = 'RECEIVE_POSTS'
+export const REQUEST_STORIES = 'REQUEST_STORIES';
+export const RECEIVE_STORIES = 'RECEIVE_POSTS';
+export const INVALIDATE_STORY_TYPE = 'INVALIDATE_STORY_TYPE';
 
-function requestStories() {
+export const STORIES_TOP = 'top';
+export const STORIES_NEW = 'new';
+export const STORIES_BEST = 'best';
+
+export const SELECT_STORY_TYPE = 'SELECT_STORIES_TYPE'
+
+export function changeStoriesType(storiesType) {
   return {
-    type: REQUEST_STORIES
+    type: SELECT_STORY_TYPE,
+    storiesType
   }
 }
 
-function receiveStories(json) {
 
+function requestStories(storiesType) {
+  return {
+    type: REQUEST_STORIES,
+    storiesType
+  }
+}
+
+function receiveStories(storiesType, json) {
   return {
     type: RECEIVE_STORIES,
+    storiesType,
     posts: json,
     receivedAt: Date.now()
   }
 }
 
-function fetchStories() {
+function getStoryFromId(id) {
+  const url = `https://hacker-news.firebaseio.com/v0/item/${id}.json`
+  return fetch(url)
+      .then(response => response.json());
+}
+
+function fetchStories(type) {
   return dispatch => {
-    dispatch(requestStories())
-    const url = 'https://hacker-news.firebaseio.com/v0/topstories.json?print=pretty'
+    dispatch(requestStories(type))
+    const url = `https://hacker-news.firebaseio.com/v0/${type}stories.json`;
     return fetch(url)
       .then(response => response.json())
       .then( response => {
-        return new Promise( (resolve, reject) => {
-            setTimeout(() => {
-                resolve(response);
-            }, 1000);            
-        });
+        var all = response.map( id => getStoryFromId(id));
+        return Promise.all(all);
       })
-      .then(json => dispatch(receiveStories(json)))
+      .then(json => dispatch(receiveStories(type, json)))
   }
 }
 
-function shouldFetchStories(state) {
-  const posts = state.posts
-  if (!posts) {
+function shouldFetchStories(state, type) {
+  const stories = state.hackerNewsStories[type];
+  if (!stories) {
     return true
-  } else if (posts.isFetching) {
+  } else if (stories.isFetching) {
     return false
   } else {
-    return posts.didInvalidate
+    return stories.didInvalidate
   }
 }
 
-export function fetchStoriesIfNeeded() {
+export function fetchStoriesIfNeeded(type = 'top') {
   return (dispatch, getState) => {
-    if (shouldFetchStories(getState())) {
-      return dispatch(fetchStories())
+    if (shouldFetchStories(getState(), type)) {
+      return dispatch(fetchStories(type))
+    } else {
+      return Promise.resolve();
     }
   }
 }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import StoryList from './StoryList';
 import { connect } from 'react-redux';
 import Loading from './Loading';
+import StoryTypeSelector from './StoryTypeSelector';
 
 class StoryListContainer extends Component {
 
@@ -10,6 +11,7 @@ class StoryListContainer extends Component {
     const storyList = empty ? <Loading /> : <StoryList items={this.props.items}/>;
     return (
       <div>
+        <StoryTypeSelector />
         {storyList}
       </div>
     );
@@ -17,12 +19,12 @@ class StoryListContainer extends Component {
 }
 
 const mapStateToProps = state => {
-  const { hackerNewsStories } = state
+  const { hackerNewsStories, selectedStoryType } = state;
   const {
     isFetching,
     lastUpdated,
     items
-  } = hackerNewsStories.stories || {
+  } = hackerNewsStories[selectedStoryType] || {
     isFetching: true,
     items: []
   }
