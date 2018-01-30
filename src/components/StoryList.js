@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Story from './Story'
+import Story from './Story';
+import PropTypes from "prop-types";
 
 class StoryList extends Component {
 
@@ -14,5 +15,14 @@ class StoryList extends Component {
     );
   }
 }
+
+StoryList.propTypes = {
+  items: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired
+  }))
+}
+
 
 export default StoryList;

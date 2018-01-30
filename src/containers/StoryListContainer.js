@@ -3,6 +3,7 @@ import StoryList from '../components/StoryList';
 import { connect } from 'react-redux';
 import Loading from '../components/Loading';
 import StoryTypeSelector from '../components/StoryTypeSelector';
+import PropTypes from "prop-types";
 
 export class StoryListContainer extends Component {
 
@@ -34,5 +35,15 @@ const mapStateToProps = state => {
     lastUpdated
   }
 }
+
+StoryListContainer.propTypes = {
+  items: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired
+  })),
+  isFetching: PropTypes.bool,
+  lastUpdated: PropTypes.string
+};
 
 export default connect(mapStateToProps)(StoryListContainer);

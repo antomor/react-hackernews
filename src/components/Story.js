@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from "prop-types";
 
 class Story extends Component {
 
@@ -10,6 +11,13 @@ class Story extends Component {
       </li>
     );
   }
+}
+
+Story.propTypes = {
+  item: PropTypes.shape({
+    url: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired
+  }).isRequired
 }
 
 export default Story;
