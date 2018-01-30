@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Loading from '../components/Loading';
 import StoryTypeSelector from '../components/StoryTypeSelector';
 
-class StoryListContainer extends Component {
+export class StoryListContainer extends Component {
 
   render() {
     const empty = !this.props.items.length > 0;

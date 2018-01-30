@@ -1,9 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+import { shallow } from 'enzyme';
 
 it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
-  ReactDOM.unmountComponentAtNode(div);
+  const wrapper = shallow(<App />);
+  var header = <header className="App-header">
+                <h1 className="App-title">React HackerNews</h1>
+              </header>;
+  expect(wrapper.contains(header)).toEqual(true);
 });
