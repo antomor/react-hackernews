@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import StoryList from './StoryList';
+import StoryList from '../components/StoryList';
 import { connect } from 'react-redux';
-import Loading from './Loading';
-import StoryTypeSelector from './StoryTypeSelector';
+import Loading from '../components/Loading';
+import StoryTypeSelector from '../components/StoryTypeSelector';
 
 class StoryListContainer extends Component {
 

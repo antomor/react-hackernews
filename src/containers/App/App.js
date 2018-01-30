@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import StoryListContainer from './../StoryListContainer';
+import StoryListContainer from '../StoryListContainer';
 
 class App extends Component {
 
