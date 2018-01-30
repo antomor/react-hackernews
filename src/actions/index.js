@@ -47,7 +47,7 @@ function fetchStories(type) {
     return fetch(url)
       .then(response => response.json())
       .then( response => {
-        var all = response.map( id => getStoryFromId(id));
+        var all = response.slice(0, 20).map( id => getStoryFromId(id));
         return Promise.all(all);
       })
       .then(json => dispatch(receiveStories(type, json)))
