@@ -5,14 +5,31 @@ import {
   fetchStoriesIfNeeded, changeStoriesType 
 } from '../actions';
 
-class StoryTypeSelector extends Component {
-
+export class StoryTypeSelector extends Component {
   render() {
+    const types = [
+      {
+        id: 1,
+        type: STORIES_TOP,
+        text: 'Top'
+      },
+      {
+        id: 2,
+        type: STORIES_NEW,
+        text: 'News'
+      },
+      {
+        id: 3,
+        type: STORIES_BEST,
+        text: 'Best'
+      }
+    ];
+    var buttons = types.map(x => {
+      return <button key={x.id} onClick={(e) => this.props.getStoryType(x.type)}>{x.text}</button>
+    });
     return (
       <div>
-        <button onClick={this.props.getTop}>Top</button>
-        <button onClick={this.props.getNews}>News</button>
-        <button onClick={this.props.getBest}>Best</button>
+        {buttons}
       </div>
     );
   }
@@ -24,17 +41,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    getTop: () => {
-      dispatch(changeStoriesType(STORIES_TOP));
-      dispatch(fetchStoriesIfNeeded(STORIES_TOP));
-    },
-    getNews: () => {
-      dispatch(changeStoriesType(STORIES_NEW));
-      dispatch(fetchStoriesIfNeeded(STORIES_NEW));
-    },
-    getBest: () => {
-      dispatch(changeStoriesType(STORIES_BEST));
-      dispatch(fetchStoriesIfNeeded(STORIES_BEST));
+    getStoryType: (storyType) => {
+      dispatch(changeStoriesType(storyType));
+      dispatch(fetchStoriesIfNeeded(storyType));
     }
   }
 }
