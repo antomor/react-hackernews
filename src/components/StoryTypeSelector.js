@@ -6,6 +6,17 @@ import {
 } from '../actions';
 
 export class StoryTypeSelector extends Component {
+  constructor() {
+    super();
+    this.onChange = this.onChange.bind(this);
+  }
+
+  onChange(e) {
+    const value = e.target.value;
+    console.log(value);
+    this.props.getStoryType(value);
+  }
+
   render() {
     const types = [
       {
@@ -24,12 +35,20 @@ export class StoryTypeSelector extends Component {
         text: 'Best'
       }
     ];
-    var buttons = types.map(x => {
+    const buttons = types.map(x => {
       return <button key={x.id} onClick={(e) => this.props.getStoryType(x.type)}>{x.text}</button>
+    });
+    const options = types.map(x => {
+      return <option key={x.id} value={x.type} >{x.text}</option>
     });
     return (
       <div>
         {buttons}
+        <div>
+          <select onChange={this.onChange}>
+            {options}
+          </select>
+        </div>
       </div>
     );
   }

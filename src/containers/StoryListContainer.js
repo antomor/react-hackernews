@@ -40,10 +40,10 @@ StoryListContainer.propTypes = {
   items: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired
+    url: PropTypes.string
   })),
   isFetching: PropTypes.bool,
-  lastUpdated: PropTypes.string
+  lastUpdated: PropTypes.number
 };
 
 export default connect(mapStateToProps)(StoryListContainer);

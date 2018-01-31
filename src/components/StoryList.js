@@ -9,9 +9,9 @@ class StoryList extends Component {
         return <Story key={x.id} item={x} />
       });
     return (
-      <ul className="Story-list">
+      <div className="Story-list">
         {items}
-      </ul>
+      </div>
     );
   }
 }
@@ -20,7 +20,7 @@ StoryList.propTypes = {
   items: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
-    url: PropTypes.string.isRequired
+    url: PropTypes.string
   }))
 }
 
